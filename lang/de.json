@@ -1,0 +1,66 @@
+{
+	"enhancedcombathud-mutant-year-zero" : {
+		"Titles" : {
+			"ActionAction"				: "AKTIONEN",
+			"FreeAction"				: "FREI",
+			"Skills"					: "Fertigkeiten",
+			"ROLL"						: "WÜRFELN",
+			"FirstAid"					: "Erstehilfe",
+			"Tinkering"					: "Basteln",
+			"Reload"					: "Nachladen",
+			"TakeCover"					: "Deckung",
+			"Duck"						: "ducken",
+			"StandUp"					: "aufstehen",
+			"DrawWeapon"				: "Waffe ziehen",
+			"Parry"						: "parieren",
+			"Opportunity"				: "Gelegenheits Angriff",
+			"Overwatch"					: "vorbereiten",
+			"Defend"					: "Verteidigen",
+			"AimedShot"					: "gezielt",
+			"QuickShot"					: "schnell"
+		},
+		
+		"Descriptions" : {
+			"Flee"						: "Siehe Coriolis Regelbuch S.??",
+			"FirstAid"					: "Siehe Coriolis Regelbuch S.??",
+			"Tinkering"					: "Siehe Coriolis Regelbuch S.??",
+			"Reload"					: "Siehe Coriolis Regelbuch S.??",
+			"TakeCover"					: "Siehe Coriolis Regelbuch S.??",
+			"Duck"						: "Siehe Coriolis Regelbuch S.??",
+			"StandUp"					: "Siehe Coriolis Regelbuch S.??",
+			"DrawWeapon"				: "Siehe Coriolis Regelbuch S.??",
+			"Parry"						: "Siehe Coriolis Regelbuch S.??",
+			"Opportunity"				: "Siehe Coriolis Regelbuch S.??",
+			"Overwatch"					: "Siehe Coriolis Regelbuch S.??",
+			"Defend"					: "Siehe Coriolis Regelbuch S.??"
+		},
+		
+		"Settings" : {
+			"InjurieTable" : {
+				"name"					: "Kritische Verletzungen Tabelle",
+				"descrp"				: "Die Tabelle auf welche gewürfelt wird wenn die Lebenspunkte auf 0 fallen (ID der Tabelle)"
+			},
+			"AutoRollInjuries" : {
+				"name"					: "Verletzungen automatisch Würfeln",
+				"descrp"				: "Ob kritische Verletzungen automatisch gewürfelt werden sollen, wenn die Lebenspunkte auf 0 fallen"				
+			},
+			"TalentsThreshold" : {
+				"name"					: "Talente teilungs Grenze",
+				"descrp"				: "Die minimale Menge an Talenten in einer Gruppe um eine eigene Kategorie in der UI zu erhalten"				
+			},
+			"UseDiceCircles" : {
+				"name"					: "Nutze Würfel Symbole",
+				"descrp"				: "Ob Würfel Symbole anstatt Zahlen für Attribute und Fertigkeiten angezeigt werden sollen"				
+			},
+			"ShowAimedQuick" : {
+				"name"					: "Zeige gezielt und schnell",
+				"descrp"				: "Ob optionen für gezielte und schnelle Schüsse bei Fernkampfwaffen angezeigt werden sollen"
+			}
+		}
+	},
+	
+    "enhancedcombathud.themeOptions.mainAction" : "Farbe 3AP Aktion",
+    "enhancedcombathud.themeOptions.bonusAction" : "Farbe 2AP Aktion",
+    "enhancedcombathud.themeOptions.freeAction" : "Farbe 1AP Aktion",
+    "enhancedcombathud.themeOptions.reaction" : "Frabe freie Aktion"
+}

@@ -1,0 +1,66 @@
+{
+	"enhancedcombathud-yzecoriolis" : {
+		"Titles" : {
+			"ActionAction"				: "ACTIONS",
+			"FreeAction"				: "FREE",
+			"Skills"					: "Skills",
+			"ROLL"						: "ROLL",
+			"FirstAid"					: "First Aid",
+			"Tinkering"					: "Tinkering",
+			"Reload"					: "Reload",
+			"TakeCover"					: "Take Cover",
+			"Duck"						: "Duck",
+			"StandUp"					: "Stand Up",
+			"DrawWeapon"				: "Draw Weapon",
+			"Parry"						: "Parry",
+			"Opportunity"				: "Opportunity Attack",
+			"Overwatch"					: "Go into Overwatch",
+			"Defend"					: "Defend",
+			"AimedShot"					: "aimed",
+			"QuickShot"					: "quick"
+		},
+		
+		"Descriptions" : {
+			"Flee"						: "See Coriolis core rules book p.??",
+			"FirstAid"					: "See Coriolis core rules book p.??",
+			"Tinkering"					: "See Coriolis core rules book p.??",
+			"Reload"					: "See Coriolis core rules book p.??",
+			"TakeCover"					: "See Coriolis core rules book p.??",
+			"Duck"						: "See Coriolis core rules book p.??",
+			"StandUp"					: "See Coriolis core rules book p.??",
+			"DrawWeapon"				: "See Coriolis core rules book p.??",
+			"Parry"						: "See Coriolis core rules book p.??",
+			"Opportunity"				: "See Coriolis core rules book p.??",
+			"Overwatch"					: "See Coriolis core rules book p.??",
+			"Defend"					: "See Coriolis core rules book p.??"
+		},
+		
+		"Settings" : {
+			"InjurieTable" : {
+				"name"					: "Critical injuries roll table",
+				"descrp"				: "The table rolled when the hitpoints fall to 0 (ID of table)"
+			},
+			"AutoRollInjuries" : {
+				"name"					: "Automatically roll injuries",
+				"descrp"				: "If critical injuries should be rolled automatically when the hitpoints fall to 0"				
+			},
+			"TalentsThreshold" : {
+				"name"					: "Talents split threshold",
+				"descrp"				: "The minimum amount of talents in a group for a special group drawer to appear"				
+			},
+			"UseDiceCircles" : {
+				"name"					: "Use dice symbols",
+				"descrp"				: "If dice symbols instead of numbers should be used for Skills and Attributes"				
+			},
+			"ShowAimedQuick" : {
+				"name"					: "Show aimed and quick",
+				"descrp"				: "If options for aimed and quick shots should be shown for ranged weapons"
+			}
+		}
+	},
+	
+    "enhancedcombathud.themeOptions.mainAction" : "3AP action Colors",
+    "enhancedcombathud.themeOptions.bonusAction" : "2AP action Colors",
+    "enhancedcombathud.themeOptions.freeAction" : "1AP action Colors",
+    "enhancedcombathud.themeOptions.reaction" : "Free action Colors"
+}

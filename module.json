@@ -1,0 +1,63 @@
+{
+  "id": "enhancedcombathud-t2k4e",
+  "title": "Argon - Combat HUD (TWILIGHT:2000)",
+  "description": "An Argon version for the Twilight: 2000 System",
+  "authors": [
+    {
+    "name": "saibot"
+    }
+  ],
+  "version": "0.0.0",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11"
+  },
+  "socket": "true",
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
+    },
+    {
+      "lang": "de",
+      "name": "Deutsch",
+      "path": "lang/de.json",
+      "flags": {}
+    }
+  ],
+  "styles": [
+    "styles/coriolisCustom.css"
+  ],
+  "esmodules": [
+	"scripts/settings.js",
+	"scripts/T2Kui.js"
+  ],
+  "relationships": {
+	"requires": [
+		{
+			"id": "enhancedcombathud",
+			"type": "module",
+			"compatibility": {}
+		}
+	],
+	"systems": [
+		{
+			"id": "t2k4e",
+			"type": "system",
+			"compatibility": {}
+		}
+	]
+  },
+  "compatibility": {
+	"minimum": "11",
+	"verified": "11"
+  },
+  "url": "https://github.com/Saibot393/enhancedcombathud-t2k4e",
+  "download": "https://github.com/Saibot393/enhancedcombathud-t2k4e/archive/refs/tags/v0.0.0.zip",
+  "manifest": "https://github.com/Saibot393/enhancedcombathud-t2k4e/releases/latest/download/module.json",
+  "readme": "https://github.com/Saibot393/enhancedcombathud-t2k4e/blob/main/README.md",
+  "changelog": "https://github.com/Saibot393/enhancedcombathud-t2k4e/blob/main/CHANGELOG.md",
+  "allowBugReporter": true
+}
