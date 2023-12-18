@@ -1,5 +1,5 @@
 import {registerT2KECHSItems, T2KECHActionItems, T2KECHFreeActionItems} from "./specialItems.js";
-import {ModuleName, SystemName, getTooltipDetails, openRollDialoge, openItemRollDialoge, firstUpperCase} from "./utils.js";
+import {ModuleName, SystemName, getTooltipDetails, rollCheck, firstUpperCase} from "./utils.js";
 import {openNewInput} from "./popupInput.js";
 
 const talenttypes = ["group", "icon", "general", "humanite", "cybernetic", "bionicsculpt", "mysticalpowers"];
@@ -56,14 +56,14 @@ Hooks.on("argonInit", (CoreHUD) => {
 			
 			this.usedArmor = {};
 			let armoritems = this.actor.items.filter(item => item.type == "armor" && item.system.equipped);
-			for (let location of ["arms", "head", "legs", "torso"]) {
-				let fittingitems = armoritems.filter(item => item.system.location[location]);
+			for (let armorlocation of ["legs", "torso", "arms", "head"]) {
+				let fittingitems = armoritems.filter(item => item.system.location[armorlocation]);
 				
-				let ArmorValue = 0;
+				let ArmorValue = -1;
 				
-				fittingitems.forEach((armoritem) => {if (armoritem.system.rating.value > ArmorValue) {ArmorValue = armoritem.system.rating.value; this.usedArmor[location] = armoritem;}});
+				fittingitems.forEach((armoritem) => {if (armoritem.system.rating.value > ArmorValue) {ArmorValue = armoritem.system.rating.value; this.usedArmor[armorlocation] = armoritem;}});
 				
-				stats[location] = this.usedArmor[location]?.system.rating;
+				stats[armorlocation] = this.usedArmor[armorlocation]?.system.rating;
 			}
 			
 			let Blocks = {left : [], right : []};
@@ -84,20 +84,20 @@ Hooks.on("argonInit", (CoreHUD) => {
 						case "legs":
 						case "torso":
 							position = "right";
+							onchange = (newvalue) => this.usedArmor[key].update({system : {rating : {value : newvalue}}})
 							break;
 					}
 					
 					let icon;
 					switch(key) {
-						case "health" : icon = `fa-solid fa-heart`; break;
-						case "sanity":	icon = `fa-solid fa-brain`; break;
-						case "arms" :	icon = `fa-solid fa-hand`; break;
-						case "head":	icon = `fa-solid fa-helmet-safety`; break;
-						case "legs":	icon = `fa-solid fa-socks`; break;
-						case "torso":	icon = `fa-solid fa-shirt`; break;
+						case "health" : icon = [`fa-solid`, `fa-heart`]; break;
+						case "sanity":	icon = [`fa-solid`, `fa-brain`]; break;
+						case "arms" :	icon = [`fa-solid`, `fa-hand`]; break;
+						case "head":	icon = [`fa-solid`, `fa-helmet-safety`]; break;
+						case "legs":	icon = [`fa-solid`, `fa-socks`]; break;
+						case "torso":	icon = [`fa-solid`, `fa-shirt`]; break;
 					}
 					
-
 					Blocks[position].unshift([
 						{
 							icon: icon,
@@ -153,10 +153,8 @@ Hooks.on("argonInit", (CoreHUD) => {
 									displayer.innerText = displayer.innerText + stat.text;
 								}
 								if (stat.icon) {
-									console.log(stat.icon);
 									let icon = document.createElement("i");
-									icon.classList.add(stat.icon);
-									console.log("jup")
+									icon.classList.add(...stat.icon);
 									displayer.appendChild(icon);
 								}
 							}
@@ -202,11 +200,11 @@ Hooks.on("argonInit", (CoreHUD) => {
 				return new ARGON.DRAWER.DrawerButton([
 					{
 						label: game.i18n.localize(CONFIG.T2K4E.attributes[attribute]),
-						onClick: () => {openRollDialoge("attribute", attribute, this.actor)}
+						onClick: () => {rollCheck("attribute", attribute, this.actor)}
 					},
 					{
 						label: valueLabel,
-						onClick: () => {openRollDialoge("attribute", attribute, this.actor)},
+						onClick: () => {rollCheck("attribute", attribute, this.actor)},
 						style: "display: flex; justify-content: flex-end;"
 					}
 				]);
@@ -236,16 +234,16 @@ Hooks.on("argonInit", (CoreHUD) => {
 				return new ARGON.DRAWER.DrawerButton([
 					{
 						label: game.i18n.localize(CONFIG.T2K4E.skills[skill]),
-						onClick: () => {openRollDialoge("skill", skill.key, this.actor)}
+						onClick: () => {rollCheck("skill", skill, this.actor)}
 					},
 					{
 						label: valueLabel,
-						onClick: () => {openRollDialoge("skill", skill.key, this.actor)},
+						onClick: () => {rollCheck("skill", skill, this.actor)},
 						style: "display: flex; justify-content: flex-end;"
 					},
 					{
 						label: attributelabel,
-						onClick: () => {openRollDialoge("skill", skill.key, this.actor)},
+						onClick: () => {rollCheck("skill", skill, this.actor)},
 						style: "display: flex; justify-content: flex-end;"
 					}
 				]);
@@ -265,11 +263,11 @@ Hooks.on("argonInit", (CoreHUD) => {
 				return new ARGON.DRAWER.DrawerButton([
 					{
 						label: game.i18n.localize("CONFIG.T2K4E." + combat),
-						onClick: () => {openRollDialoge("attribute", combat, this.actor)}
+						onClick: () => {rollCheck("combat", combat, this.actor)}
 					},
 					{
 						label: valueLabel,
-						onClick: () => {openRollDialoge("attribute", combat, this.actor)},
+						onClick: () => {rollCheck("combat", combat, this.actor)},
 						style: "display: flex; justify-content: flex-end;"
 					}
 				]);

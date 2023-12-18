@@ -279,6 +279,53 @@ function openItemRollDialoge(item, rollActor, options = {modifier : 0}) {
 	}
 }
 
+function rollCheck(type, id, actor) {
+	let title;
+	let attributeName;
+	let skillName;
+	let attribute = 0;
+	let skill = 0;
+	let askForOptions = false;
+	let isRangedSkill;
+	let isCombatSkill;
+	
+	switch (type) {
+		case "attribute":
+			attributeName = id;
+			title = game.i18n.localize(CONFIG.T2K4E.attributes[id]);
+			attribute = actor.system.attributes[attributeName].value;
+			break;
+		case "skill":
+			skillName = id;
+			attributeName = CONFIG.T2K4E.skillsMap[skillName];
+			title = game.i18n.localize(CONFIG.T2K4E.skills[id]);
+			skill = actor.system.skills[skillName].value;
+			attribute = actor.system.attributes[attributeName].value;
+            isRangedSkill = ["rangedCombat", "heavyWeapons"].includes(skillName)
+            isCombatSkill = ["rangedCombat", "heavyWeapons", "closeCombat"].includes(skillName);
+			break;
+		case "combat":
+			game.t2k4e.roller.cufCheck({
+				actor: actor,
+				unitMorale: id !== "cuf"
+			})
+			return;
+			break;
+	}
+	
+	game.t2k4e.roller.taskCheck({
+		title : title,
+		attributeName : attributeName,
+		skillName : skillName,
+		actor: actor,
+		attribute : attribute,
+		skill: skill,
+		askForOptions: askForOptions,
+		rof: isRangedSkill ? 6 : 0,
+		locate: isCombatSkill
+	});
+}
+
 function sanitize(string) {
 	let parser = new DOMParser();
 	
@@ -291,4 +338,4 @@ function firstUpperCase(string) {
 	return string[0].toUpperCase() + string.slice(1);
 }
 
-export { ModuleName, SystemName, getTooltipDetails, openRollDialoge, openItemRollDialoge, firstUpperCase }
+export { ModuleName, SystemName, getTooltipDetails, rollCheck, firstUpperCase }
