@@ -2,14 +2,14 @@ import { ModuleName } from "./utils.js";
 
 const ItemReplacementID = "_argonUI_";
 
-var VaesenECHSlowItems = {};
+var T2KECHSlowItems = {};
 
-var VaesenECHFastItems = {};
+var T2KECHFastItems = {};
 
-var VaesenECHReactionItems = {};
+var T2KECHFreeItems = {};
 
-function registerVaesenECHSItems () {
-	VaesenECHSlowItems = {
+function registerT2KECHSItems () {
+	T2KECHSlowItems = {
 		groupflags : {
 			actiontype : "slow"
 		},
@@ -75,12 +75,48 @@ function registerVaesenECHSItems () {
 				description : game.i18n.localize(ModuleName+".Descriptions.Rally"),
 				skill : "command"
 			}
+		},
+		EnterExit : {
+			img: "modules/enhancedcombathud-t2k4e/icons/exit-door.svg",
+			name: game.i18n.localize(ModuleName+".Titles.EnterExit"),
+			type : "base",
+			system : {
+				description : game.i18n.localize(ModuleName+".Descriptions.EnterExit"),
+				skill : ""
+			}
 		}
 	}
 	
-	VaesenECHFastItems = {
-		Cover : {
+	T2KECHFastItems = {
+		groupflags : {
 			actiontype : "fast"
+		},
+		Cover : {
+			img: "modules/enhancedcombathud-t2k4e/icons/shield.svg",
+			name: game.i18n.localize(ModuleName+".Titles.CrossBarier"),
+			type : "base",
+			system : {
+				description : game.i18n.localize(ModuleName+".Descriptions.DrawWeapon"),
+				skill : ""
+			}
+		},
+		FulltoPartial : {
+			img: "modules/enhancedcombathud-t2k4e/icons/armor-downgrade.svg",
+			name: game.i18n.localize(ModuleName+".Titles.FulltoPartial"),
+			type : "base",
+			system : {
+				description : game.i18n.localize(ModuleName+".Descriptions.FulltoPartial"),
+				skill : ""
+			}
+		},
+		Run : {
+			img: "modules/enhancedcombathud-t2k4e/icons/run.svg",
+			name: game.i18n.localize(ModuleName+".Titles.Run"),
+			type : "base",
+			system : {
+				description : game.i18n.localize(ModuleName+".Descriptions.Run"),
+				skill : "mobility"
+			}
 		},
 		CrossBarier : {
 			img: "modules/enhancedcombathud-t2k4e/icons/jump-across.svg",
@@ -119,7 +155,7 @@ function registerVaesenECHSItems () {
 			}
 		},
 		GrappleAttack : {
-			img: "modules/enhancedcombathud-t2k4e/icons/rally-the-troops.svg",
+			img: "modules/enhancedcombathud-t2k4e/icons/slap.svg",
 			name: game.i18n.localize(ModuleName+".Titles.GrappleAttack"),
 			type : "base",
 			system : {
@@ -128,7 +164,7 @@ function registerVaesenECHSItems () {
 			}
 		},
 		Retreat : {
-			img: "modules/enhancedcombathud-t2k4e/icons/slap.svg",
+			img: "modules/enhancedcombathud-t2k4e/icons/return-arrow.svg",
 			name: game.i18n.localize(ModuleName+".Titles.Retreat"),
 			type : "base",
 			system : {
@@ -147,9 +183,9 @@ function registerVaesenECHSItems () {
 		}
 	}
 	
-	VaesenECHReactionItems = {
+	T2KECHFreeItems = {
 		groupflags : {
-			actiontype : "react"
+			actiontype : "free"
 		},
 		Drop : {
 			img: "icons/svg/down.svg",
@@ -168,31 +204,11 @@ function registerVaesenECHSItems () {
 				description : game.i18n.localize(ModuleName+".Descriptions.PartialtoFull"),
 				skill : ""
 			}
-		},
-		BreakFree : {
-			img: "modules/enhancedcombathud/icons/svg/mighty-force.svg",
-			name: game.i18n.localize(ModuleName+".Titles.BreakFree"),
-			type : "base",
-			system : {
-				description : game.i18n.localize(ModuleName+".Descriptions.BreakFree"),
-				skill : "force",
-				vaesenattribute : "might"
-			}
-		},
-		Chase : {
-			img: "modules/enhancedcombathud/icons/svg/walking-boot.svg",
-			name: game.i18n.localize(ModuleName+".Titles.Chase"),
-			type : "base",
-			system : {
-				description : game.i18n.localize(ModuleName+".Descriptions.Chase"),
-				skill : "agility",
-				vaesenattribute : "bodyControl"
-			}
 		}
 	}
 	
 	//some preparation
-	for (let itemset of [VaesenECHSlowItems, VaesenECHFastItems, VaesenECHReactionItems]) {
+	for (let itemset of [T2KECHSlowItems, T2KECHFastItems, T2KECHFreeItems]) {
 		for (let itemkey of Object.keys(itemset)) {
 			if (itemkey != "groupflags") {
 				itemset[itemkey].flags = {};
@@ -210,4 +226,4 @@ function registerVaesenECHSItems () {
 	}
 }
 
-export {registerVaesenECHSItems, VaesenECHSlowItems, VaesenECHFastItems, VaesenECHReactionItems}
+export {registerT2KECHSItems, T2KECHSlowItems, T2KECHFastItems, T2KECHFreeItems}

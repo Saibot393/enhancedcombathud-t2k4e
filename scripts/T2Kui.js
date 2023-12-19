@@ -1,4 +1,4 @@
-import {registerT2KECHSItems, T2KECHActionItems, T2KECHFreeActionItems} from "./specialItems.js";
+import {registerT2KECHSItems, T2KECHSlowItems, T2KECHFastItems, T2KECHFreeItems} from "./specialItems.js";
 import {ModuleName, SystemName, getTooltipDetails, rollCheck, firstUpperCase} from "./utils.js";
 import {openNewInput} from "./popupInput.js";
 
@@ -9,10 +9,25 @@ Hooks.on("argonInit", (CoreHUD) => {
   
 	registerT2KECHSItems();
   
-	function consumeAction(amount) {
-		if (ui.ARGON.components.main[0].currentActions >= amount) {
-			ui.ARGON.components.main[0].currentActions = ui.ARGON.components.main[0].currentActions - amount;
-			return true;
+	function consumeAction(type) {
+		switch(type) {
+			case "slow":
+				if (!ui.ARGON.components.main[0].isActionUsed) {
+					ui.ARGON.components.main[0].isActionUsed = true;
+					ui.ARGON.components.main[0].updateActionUse();
+					return true;
+				}
+				break;
+			case "fast":
+				if (!ui.ARGON.components.main[1].isActionUsed) {
+					ui.ARGON.components.main[1].isActionUsed = true;
+					ui.ARGON.components.main[1].updateActionUse();
+					return true;
+				}
+				else {
+					return consumeAction("slow");
+				}
+				break;
 		}
 		
 		return false;
@@ -31,8 +46,6 @@ Hooks.on("argonInit", (CoreHUD) => {
 					}
 				}
 			});
-			
-			this.wasDead = {};
 		}
 
 		get description() {
@@ -40,11 +53,9 @@ Hooks.on("argonInit", (CoreHUD) => {
 		}
 
 		get isDead() {
-			let isDead = {};
+			let isDead = (this.actor.system.health?.value == 0 && this.actor.system.health?.max != 0) || (this.actor.system.sanity?.value == 0 && this.actor.system.sanity?.max != 0);
 			
-			this.wasDead = isDead;
-			
-			return Object.values(isDead).find(value => value);
+			return isDead;
 		}
 		
 		async getsideStatBlocks() {
@@ -135,6 +146,10 @@ Hooks.on("argonInit", (CoreHUD) => {
 					sidesb.classList.add("portrait-stat-block");
 					sidesb.style.paddingLeft = "0.35em";
 					sidesb.style.paddingRight = "0.35em";
+					if (statBlocks[position].length > 2) {
+						sidesb.style.paddingTop = "2px";
+						sidesb.style.paddingBottom = "2px";
+					}
 					for (const stat of block) {
 						if (!stat.position) {
 							let displayer;
@@ -166,6 +181,8 @@ Hooks.on("argonInit", (CoreHUD) => {
 				}
 				this.element.appendChild(sb);
 			}
+			
+			this.element.querySelector(".player-buttons").style.right = "0%";
 		}
 		
 		static async rollInjuries() {
@@ -326,7 +343,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 		}
 	}
   
-    class T2KActionActionPanel extends ARGON.MAIN.ActionPanel {
+    class T2KSlowActionPanel extends ARGON.MAIN.ActionPanel {
 		constructor(...args) {
 			super(...args);
 			
@@ -338,49 +355,60 @@ Hooks.on("argonInit", (CoreHUD) => {
 		}
 		
 		get maxActions() {
-            return 3;
+            return 1;
         }
 		
 		get currentActions() {
-			return this.actionsLeft;
-		}
-		
-		set currentActions(value) {
-			this.actionsLeft = value;
-			this.updateActionUse();
+			return this.isActionUsed ? 0 : 1;
 		}
 		
 		_onNewRound(combat) {
-			this.actionsLeft = this.maxActions;
+			this.isActionUsed = false;
 			this.updateActionUse();
 		}
 		
 		async _getButtons() {
-			const specialActions = Object.values(T2KECHActionItems);
+			const specialActions = Object.values(T2KECHSlowItems);
 
 			let buttons = [];
 			
-			let talentbuttons = [];
-			let generalBlacklist = [];
-			const talentsThreshold = game.settings.get(ModuleName, "TalentsThreshold");
-			
-			let talents = this.actor.items.filter(item => item.type == "talent");
-			
-			for (const subtype of talenttypes.filter(type => type != "general")) {
-				if (talents.filter(item => item.system.category == subtype).length >= talentsThreshold) {
-					talentbuttons.push(new T2KButtonPanelButton({type: "talent", subtype: subtype, color: 0}));
-					generalBlacklist.push(subtype);
-				}
-			}
-			
-			if (talents.find(item => !generalBlacklist.includes(item.system.category))) {
-				talentbuttons.unshift(new T2KButtonPanelButton({type: "talent", subtype: "general", color: 0, typeblacklist : generalBlacklist}));
-			}
-			
 			buttons.push(new T2KItemButton({ item: null, isWeaponSet: true, isPrimary: true }));
 			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[0]), new T2KSpecialActionButton(specialActions[1])));
-			buttons.push(...talentbuttons);
-			buttons.push(new T2KButtonPanelButton({type: "gear", color: 0}));
+			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[2]), new T2KSpecialActionButton(specialActions[3])));
+			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[4]), new T2KSpecialActionButton(specialActions[5])));
+			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[6]), new T2KSpecialActionButton(specialActions[7])));
+			
+			return buttons.filter(button => button.items == undefined || button.items.length);
+		}
+    }
+	
+    class T2KFastActionPanel extends ARGON.MAIN.ActionPanel {
+		constructor(...args) {
+			super(...args);
+			
+			this.actionsLeft = this.maxActions;
+		}
+
+		get maxActions() {
+            return 1;
+        }
+		
+		get currentActions() {
+			return this.isActionUsed ? 0 : 1;
+		}
+		
+		_onNewRound(combat) {
+			this.isActionUsed = false;
+			this.updateActionUse();
+		}
+		
+		async _getButtons() {
+			const specialActions = Object.values(T2KECHFastItems);
+
+			let buttons = [];
+			
+			buttons.push(new T2KButtonPanelButton({type: "gear", color: 1}));
+			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[0]), new T2KSpecialActionButton(specialActions[1])));
 			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[2]), new T2KSpecialActionButton(specialActions[3])));
 			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[4]), new T2KSpecialActionButton(specialActions[5])));
 			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[6]), new T2KSpecialActionButton(specialActions[7])));
@@ -400,11 +428,12 @@ Hooks.on("argonInit", (CoreHUD) => {
 		}
 		
 		async _getButtons() {
-			const specialActions = Object.values(T2KECHFreeActionItems);
+			const specialActions = Object.values(T2KECHFreeItems);
 
-			const buttons = [
-				new T2KSpecialActionButton(specialActions[0])
-			];
+			let buttons = [];
+			
+			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[0]), new T2KSpecialActionButton(specialActions[1])));
+			
 			return buttons.filter(button => button.items == undefined || button.items.length);
 		}
     }
@@ -456,57 +485,18 @@ Hooks.on("argonInit", (CoreHUD) => {
 			if (this.item.type == "weapon") {
 				used = true;
 				
-				let modifier = 0;
-				
-				switch (special) {
-					case "aimed":
-						modifier = 2;
-						break;
-					case "quick":
-						modifier = -2;
-						break;
-				}
-				
-				if (used) {
-					openItemRollDialoge(this.item, this.actor, {modifier : modifier});
-				}
+				this.item.rollAttack({}, this.actor);
 			}
 			
 			if (this.item.type == "gear") {
-				this.item.sendToChat();
+				this.item.displayCard();
 				
 				used = true;
-			}		
-			
-			if (this.item.type == "talent") {
-				this.item.sendToChat();
-			}
+			}	
 			
 			if (used) {
-				T2KItemButton.consumeActionEconomy(this.item, special);
+				T2KItemButton.consumeActionEconomy(this.item);
 			}
-		}
-		
-		async specialOptions() {
-			let Options = [];
-			
-			if (game.settings.get(ModuleName, "ShowAimedQuick")) {
-				if (this.item.type == "weapon") {
-					if (!this.item.system.melee) {
-						Options.push({
-							text : game.i18n.localize(ModuleName+".Titles.AimedShot"),
-							special : "aimed"
-						});
-						
-						Options.push({
-							text : game.i18n.localize(ModuleName+".Titles.QuickShot"),
-							special : "quick"
-						});
-					}	
-				}
-			}
-			
-			return Options;
 		}
 		
 		async _onTooltipMouseEnter(event) {
@@ -533,46 +523,16 @@ Hooks.on("argonInit", (CoreHUD) => {
 	
 		async _renderInner(data) {
 			await super._renderInner(data);
-			
-			const specialActions = await this.specialOptions();
-			if (specialActions.length > 0) {
-				this.element.querySelector("span").id = "maintitle";
-				
-				for (let i = 0; i < specialActions.length; i++) {
-					let Action = specialActions[i];
-					let ActionTitle = document.createElement("span");
-					ActionTitle.id = "specialAction";
-					ActionTitle.classList.add("action-element-title");
-					ActionTitle.innerHTML = Action.text;
-					ActionTitle.onclick = (event) => {event.stopPropagation(); event.preventDefault(); this._onLeftClick(event, Action.special)};
-					ActionTitle.style.visibility = "hidden";
-					
-					ActionTitle.style.width = `${100/specialActions.length}%`;
-					ActionTitle.style.left = `${i * 100/specialActions.length}%`;
-					
-					ActionTitle.onmouseenter = () => {ActionTitle.style.filter = "brightness(66%)"}
-					ActionTitle.onmouseleave = () => {ActionTitle.style.filter = ""}
-					
-					this.element.appendChild(ActionTitle);
-				}
-			}
 		}
-
-		static consumeActionEconomy(item, special = "") {
-			let consumeID = undefined;
-			
-			if (item.type == "weapon") {
-				switch (special) {
-					case "aimed":
-						consumeAction(3);
-						break;
-					case "quick":
-						consumeAction(1);
-						break;
-					default:
-						consumeAction(2);
-						break;
-				}
+		
+		static consumeActionEconomy(item) {
+			switch (item.type) {
+				case "weapon":
+					consumeAction("slow");
+					break;
+				case "gear":
+					consumeAction("fast");
+					break;
 			}
 		}
 	}
@@ -593,34 +553,12 @@ Hooks.on("argonInit", (CoreHUD) => {
 		get label() {
 			switch (this.type) {
 				case "gear": return SystemName+".Gear";
-				case "talent": 
-					switch(this.subtype) {
-						case "group" : return SystemName+".TalentCatGroup";
-						case "icon" : return SystemName+".TalentCatIcon";
-						case "general" : return SystemName+".SheetTalents";
-						case "humanite" : return SystemName+".TalentCatHumanite";
-						case "cybernetic" : return SystemName+".TalentCatCybernetic";
-						case "bionicsculpt" : return SystemName+".TalentCatBionicSculpt";
-						case "mysticalpowers" :return SystemName+".TalentCatMysticalPowers"
-						default : return SystemName+".SheetTalents";
-					}
 			}
 		}
 
 		get icon() {
 			switch (this.type) {
 				case "gear": return "modules/enhancedcombathud/icons/svg/backpack.svg";
-				case "talent": 
-					switch(this.subtype) {
-						case "group" : return "modules/enhancedcombathud-t2k4e/icons/team-upgrade.svg";
-						case "icon" : return "modules/enhancedcombathud-t2k4e/icons/psychic-waves.svg";
-						case "general" : return "icons/svg/book.svg";
-						case "humanite" : return "modules/enhancedcombathud-t2k4e/icons/alien-stare.svg";
-						case "cybernetic" : return "modules/enhancedcombathud-t2k4e/icons/cyborg-face.svg";
-						case "bionicsculpt" : return "modules/enhancedcombathud-t2k4e/icons/techno-heart.svg";
-						case "mysticalpowers" :return "modules/enhancedcombathud-t2k4e/icons/glowing-artifact.svg"
-						default : return "icons/svg/book.svg";
-					}
 			}
 		}
 		
@@ -663,7 +601,18 @@ Hooks.on("argonInit", (CoreHUD) => {
 		}
 		
 		get colorScheme() {
-			return 3 - this.item.flags[ModuleName].APconsumption;
+			switch (this.item?.flags[ModuleName]?.actiontype) {
+				case "slow":
+					return 0;
+					break;
+				case "fast":
+					return 1;
+					break;
+				case "free":
+					return 3;
+					break;
+			}
+			return 0;
 		}
 
 		async getTooltipData() {
@@ -684,54 +633,14 @@ Hooks.on("argonInit", (CoreHUD) => {
 			const item = this.item;
 			
 			if (this.item.system.skill) {
-				if (this.actor.system.creatureType == "robot") {
-					openRollDialoge("skill", this.item.system.skillRobot, this.actor);
-				}
-				else {
-					openRollDialoge("skill", this.item.system.skill, this.actor);
-				}
+				rollCheck("skill", this.item.system.skill, this.actor);
 			}
 			
 			if (used) {
-				T2KSpecialActionButton.consumeActionEconomy(this.item);
+				consumeAction(item.flags[ModuleName].actiontype);
 			}
 		}
-
-		static consumeActionEconomy(item) {
-			consumeAction(item.flags[ModuleName].APconsumption);
-		}
     }
-	
-	class T2KMovementHud extends ARGON.MovementHud {
-
-		constructor (...args) {
-			super(...args);
-			
-			this.prevUsedMovement = 0;
-		}
-
-		get movementMax() {
-			return this.actor.system.movementRate / canvas.scene.dimensions.distance;
-		}
-		
-		get movementUsed() {
-			return this._movementUsed;
-		}
-		
-		set movementUsed(value) {
-			super._movementUsed = value;
-			
-			consumeAction(Math.ceil(value/this.movementMax) - Math.ceil(this.prevUsedMovement/this.movementMax));
-			
-			this.prevUsedMovement = value;
-		}
-		
-	    _onNewRound(combat) {
-			super._onNewRound(combat);
-			
-			this.prevUsedMovement = 0;
-	    }
-	}
 	
 	class T2KWeaponSets extends ARGON.WeaponSets {
 		constructor(...args) {
@@ -853,12 +762,12 @@ Hooks.on("argonInit", (CoreHUD) => {
     CoreHUD.definePortraitPanel(T2KPortraitPanel);
     CoreHUD.defineDrawerPanel(T2KDrawerPanel);
     CoreHUD.defineMainPanels([
-		T2KActionActionPanel,
+		T2KSlowActionPanel,
+		T2KFastActionPanel,
 		T2KFreeActionPanel,
 		ARGON.PREFAB.PassTurnPanel
     ]);  
 	CoreHUD.defineMovementHud(null);
-	CoreHUD.defineMovementHud(T2KMovementHud);
-    CoreHUD.defineWeaponSets(T2KWeaponSets);
+	CoreHUD.defineWeaponSets(T2KWeaponSets);
 	CoreHUD.defineSupportedActorTypes(["character", "npc", "ship"]);
 });
