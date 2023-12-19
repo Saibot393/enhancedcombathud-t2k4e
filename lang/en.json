@@ -1,23 +1,33 @@
 {
-	"enhancedcombathud-yzecoriolis" : {
+	"enhancedcombathud-t2k4e" : {
 		"Titles" : {
 			"ActionAction"				: "ACTIONS",
 			"FreeAction"				: "FREE",
 			"Skills"					: "Skills",
 			"ROLL"						: "ROLL",
-			"FirstAid"					: "First Aid",
-			"Tinkering"					: "Tinkering",
+			
+			"Persuade"					: "Persuade",
+			"Grapple"					: "Grapple",
+			"BreakFree"					: "Break free",
+			"ClearJam"					: "Clear Jam",
+			"Aim"						: "Aim",
+			"FirstAid"					: "First aid",
+			"Rally"						: "Rally",
+			"EnterExit"					: "Enter/exit vehicle",
+			
+			"Cover"						: "Seek cover",
+			"FulltoPartial"				: "full to partial cover",
+			"Run"						: "Run",
+			"CrossBarier"				: "Crosss barrier",
+			"GetUp"						: "Get up",
+			"Shove"						: "Shove",
+			"Disarm"					: "Disarm",
+			"GrappleAttack"				: "Grapple attack",
+			"Retreat"					: "Retreat",
 			"Reload"					: "Reload",
-			"TakeCover"					: "Take Cover",
-			"Duck"						: "Duck",
-			"StandUp"					: "Stand Up",
-			"DrawWeapon"				: "Draw Weapon",
-			"Parry"						: "Parry",
-			"Opportunity"				: "Opportunity Attack",
-			"Overwatch"					: "Go into Overwatch",
-			"Defend"					: "Defend",
-			"AimedShot"					: "aimed",
-			"QuickShot"					: "quick"
+			
+			"Drop"						: "Drop to ground",
+			"PartialtoFull"				: "Partial to full cover"
 		},
 		
 		"Descriptions" : {

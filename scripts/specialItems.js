@@ -189,10 +189,10 @@ function registerT2KECHSItems () {
 		},
 		Drop : {
 			img: "icons/svg/down.svg",
-			name: game.i18n.localize(ModuleName+".Titles.Dodge"),
+			name: game.i18n.localize(ModuleName+".Titles.Drop"),
 			type : "base",
 			system : {
-				description : game.i18n.localize(ModuleName+".Descriptions.Dodge"),
+				description : game.i18n.localize(ModuleName+".Descriptions.Drop"),
 				skill : ""
 			}
 		},
