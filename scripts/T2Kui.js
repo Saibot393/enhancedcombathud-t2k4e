@@ -49,7 +49,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 		}
 
 		get description() {
-			return `${this.actor.system.bio.concept}`;
+			return `${this.actor.system.bio.militaryRank}`;
 		}
 
 		get isDead() {
@@ -279,7 +279,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 				
 				return new ARGON.DRAWER.DrawerButton([
 					{
-						label: game.i18n.localize("CONFIG.T2K4E." + combat),
+						label: game.i18n.localize("T2K4E.ActorSheet" + combat=="cuf" ? "CuF" : "UnitMorale"),
 						onClick: () => {rollCheck("combat", combat, this.actor)}
 					},
 					{
@@ -297,7 +297,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 				gridCols: "7fr 2fr",
 				captions: [
 					{
-						label: game.i18n.localize(SystemName+".Attributes"),
+						label: game.i18n.localize(ModuleName+".Titles.Attributes"),
 					},
 					{
 						label: game.i18n.localize(ModuleName+".Titles.ROLL"),
@@ -310,7 +310,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 				gridCols: "7fr 2fr 2fr",
 				captions: [
 					{
-						label: game.i18n.localize(SystemName+".SkillCat"),
+						label: game.i18n.localize("T2K4E.Skills"),
 					},
 					{
 						label: "",
@@ -326,7 +326,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 				gridCols: "7fr 2fr",
 				captions: [
 					{
-						label: game.i18n.localize(SystemName+".Attributes"),
+						label: game.i18n.localize("T2K4E.ActorSheet.Combat"),
 					},
 					{
 						label: "",
@@ -339,7 +339,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 		}
 
 		get title() {
-			return `${game.i18n.localize(SystemName+".Attributes")} & ${game.i18n.localize(ModuleName+".Titles.Skills")}`;
+			return `${game.i18n.localize(ModuleName+".Titles.Attributes")}, ${game.i18n.localize("T2K4E.Skills")} & ${game.i18n.localize("T2K4E.ActorSheet.Combat")}`;
 		}
 	}
   
@@ -351,7 +351,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 		}
 
 		get label() {
-			return ModuleName+".Titles.ActionAction";
+			return ModuleName+".Titles.SlowAction";
 		}
 		
 		get maxActions() {
@@ -387,6 +387,10 @@ Hooks.on("argonInit", (CoreHUD) => {
 			super(...args);
 			
 			this.actionsLeft = this.maxActions;
+		}
+		
+		get label() {
+			return ModuleName+".Titles.FastAction";
 		}
 
 		get maxActions() {
@@ -769,5 +773,5 @@ Hooks.on("argonInit", (CoreHUD) => {
     ]);  
 	CoreHUD.defineMovementHud(null);
 	CoreHUD.defineWeaponSets(T2KWeaponSets);
-	CoreHUD.defineSupportedActorTypes(["character", "npc", "ship"]);
+	CoreHUD.defineSupportedActorTypes(["character", "npc"]);
 });

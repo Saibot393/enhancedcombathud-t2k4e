@@ -1,9 +1,10 @@
 {
 	"enhancedcombathud-t2k4e" : {
 		"Titles" : {
-			"ActionAction"				: "ACTIONS",
-			"FreeAction"				: "FREE",
-			"Skills"					: "Skills",
+			"SlowAction"				: "SLOW ACTIONS",
+			"FastAction"				: "FAST ACTIONS",
+			"FreeAction"				: "FREE ACTIONS",
+			"Attributes"				: "Attributes",
 			"ROLL"						: "ROLL",
 			
 			"Persuade"					: "Persuade",
