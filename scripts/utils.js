@@ -3,8 +3,10 @@ const SystemName = "t2k4e";
 //import { T2KModifierDialog, T2KRoll } from "/systems/t2k4e/module/T2K-roll.js";
 
 async function getTooltipDetails(item, actortype) {
-	let title, description, itemType, creatureType, skillmodifiers, attributemodifiers, validskills, techTier, category, subtitle, subtitlecolor, range, automatic, power, radius, damage, bonus, quantity, initiative, crit, explosive, specials, hpbonus, mpbonus;
-	let propertiesLabel = game.i18n.localize(SystemName + ".Special");
+	let description, itemType, type, skill, range, automatic, damage, rof, ammo, blast, quantity, crit, props, rollmods, armor;
+	let title;
+	let subtitle;
+	let propertiesLabel = game.i18n.localize(ModuleName + ".Titles.Properties");
 	let properties = [];
 	let materialComponents = "";
 
@@ -15,175 +17,100 @@ async function getTooltipDetails(item, actortype) {
 	title = item.name;
 	description = item.system.description;
 	itemType = item.type;
-	creatureType = item.parent?.system.creatureType;
-	skillmodifiers = [];
-	attributemodifiers = [];
-	validskills = item.system.skillKeysList;
-	techTier = item.system.techTier;
-	if (item.system.modifiers) {
-		attributemodifiers = attributemodifiers.concat(Object.keys(item.system.modifiers).filter(key => item.system.modifiers[key] != 0 && !validskills.includes(key)));
-		skillmodifiers = skillmodifiers.concat(Object.keys(item.system.modifiers).filter(key => item.system.modifiers[key] != 0 && validskills.includes(key)));
-	}
-	if (item.system.gearModifiers) {
-		attributemodifiers = attributemodifiers.concat(Object.keys(item.system.gearModifiers).filter(key => item.system.gearModifiers[key] != 0 && !attributemodifiers.includes(key) && !validskills.includes(key)));
-		skillmodifiers = skillmodifiers.concat(Object.keys(item.system.gearModifiers).filter(key => item.system.gearModifiers[key] != 0 && !skillmodifiers.includes(key) && validskills.includes(key)));
-	}
-	category = item.system.category;
+	type = item.system.itemType;
+	skill = item.system?.skill;
 	range = item.system?.range;
 	automatic = item.system?.automatic;
-	power = item.system?.blastPower;
-	radius = item.system?.blastRadius;
 	damage = item.system?.damage;
-	bonus = item.system?.bonus;
-	quantity = item.system?.quantity;
-	initiative = item.system?.initiative;
-	crit = item.system?.crit ? Object.values(item.system?.crit).filter(value => value).join("/") : "";
-	explosive = item.system?.explosive;
-	specials = item.system?.special;
-	hpbonus = item.system?.hpBonus;
-	mpbonus = item.system?.mpBonus;
+	rof = item.system?.rof;
+	ammo = item.system?.ammo;
+	blast = item.system?.blast;
+	quantity = item.system?.qty;
+	crit = item.system?.crit;
+	props = item.system?.props;
+	rollmods = item.system?.rollModifiers;
+	armor = item.system?.armorModifier;
 	
 	properties = [];
 
-	switch (itemType) {
-		case "weapon":
-			switch (techTier) {
-				default:
-				case "P":
-					subtitle = game.i18n.localize(`${SystemName}.TechTierPrimitive`);
-					subtitlecolor = "#523d06";
-					break;
-				case "O":
-					subtitle = game.i18n.localize(`${SystemName}.TechTierOrdinary`);
-					break;
-				case "A":
-					subtitle = game.i18n.localize(`${SystemName}.TechTierAdvanced`);
-					subtitlecolor = "#118209";
-					break;
-				case "F":
-					subtitle = game.i18n.localize(`${SystemName}.TechTierFaction`);
-					subtitlecolor = "#970ea1";
-					break;
-				case "R":
-					subtitle = game.i18n.localize(`${SystemName}.TechTierPortalBuilderRelic`);
-					subtitlecolor = "#ebb010"
-					break;
-			}
-			if (specials) {
-				properties.push(...(Object.values(specials).map(text => {return {label : text}})));
-			}
-			break;
-		case "talent":
-			let categoryName;
-			switch (category) {
-					case "group" :
-						categoryName = "Group";
-						break;
-					case "icon" :
-						categoryName = "Icon";
-						break;
-					case "general" :
-						categoryName = "General";
-						break;
-					case "humanite" :
-						categoryName = "Humanite";
-						break;
-					case "cybernetic" :
-						categoryName = "Cybernetic";
-						break;
-					case "bionicsculpt" :
-						categoryName = "BionicSculpt";
-						break;
-					case "mysticalpowers" :
-						categoryName = "MysticalPowers";
-						break;
-			}
-			subtitle = game.i18n.localize(`${SystemName}.TalentCat` + categoryName);
-			break;
+	if (type) {
+		subtitle = type;
 	}
-	
-	if (range) {
-		range = firstUpperCase(range) + "Range";
-	}
-	
-	if (radius) {
-		radius = firstUpperCase(radius) + "Range";
+	else {
+		if (skill) {
+			subtitle = game.i18n.localize("T2K4E.SkillNames." + skill);
+		}
 	}
 
 	switch (itemType) {
 		case "weapon":
 			details.push({
-				label: SystemName + ".Bonus",
-				value: bonus
-			});
-			details.push({
-				label: SystemName + ".Initiative",
-				value: initiative
-			});
-			details.push({
-				label: SystemName + ".Damage",
+				label: "T2K4E.ItemSheet.Damage",
 				value: damage
 			});
 			details.push({
-				label: SystemName + ".Crit",
+				label: "T2K4E.ItemSheet.RoF",
+				value: rof
+			});
+			details.push({
+				label: "T2K4E.ItemSheet.Crit",
 				value: crit
 			});
-			
-			if (explosive) {
-				details.push({
-					label: SystemName + ".BlastPower",
-					value: power
-				});
-				details.push({
-					label: SystemName + ".BlastRadius",
-					value: game.i18n.localize(SystemName + "." + radius)
-				});
-			}
-			else {
-				details.push({
-					label: SystemName + ".Range",
-					value: game.i18n.localize(SystemName + "." + range)
-				});
-				details.push({
-					label: SystemName + ".Automatic",
-					value: automatic ? '<i class="fas fa-check"></i>' : 'test'
-				});
-			}
+			details.push({
+				label: "T2K4E.ItemSheet.Blast",
+				value: blast
+			});
+			details.push({
+				label: "T2K4E.ItemSheet.Range",
+				value: range
+			});
+			details.push({
+				label: "T2K4E.ItemSheet.Ammo",
+				value: ammo
+			});
+			details.push({
+				label: "T2K4E.ItemSheet.Armor",
+				value: armor
+			});
 			break;
-		case "gear":
-			if (bonus) {
-				details.push({
-					label: SystemName + ".Bonus",
-					value: bonus
-				});
-			}
+		case "grenade":
+			details.push({
+				label: "T2K4E.ItemSheet.Damage",
+				value: damage
+			});
+			details.push({
+				label: "T2K4E.ItemSheet.Crit",
+				value: crit
+			});
+			details.push({
+				label: "T2K4E.ItemSheet.Range",
+				value: range
+			});
+			details.push({
+				label: "T2K4E.ItemSheet.Armor",
+				value: armor
+			});
 			break;
-		case "talent":
-			if (hpbonus) {
-				details.push({
-					label: SystemName + ".HPBonus",
-					value: hpbonus
-				});
-			}
-			if (mpbonus) {
-				details.push({
-					label: SystemName + ".MPBonus",
-					value: mpbonus
-				});
-			}
-			break;
+	}
+	
+	if (props) {
+		properties = Object.keys(props).filter(prop => props[prop]).map(prop => {return {label : "T2K4E.ItemPropNames." + prop}});
+	}
+	
+	if (rollmods) {
+		properties = properties.concat(Object.keys(rollmods).map(mod => {return {label : `${game.i18n.localize("T2K4E." + (rollmods[mod].name.split(".")[0] == "skill" ? "SkillNames." : "AttributeNames.") +rollmods[mod].name.split(".")[1])} ${rollmods[mod].value}`}}));
 	}
 
 	if (description) description = sanitize(description);
 	
 	if (quantity != undefined && details.length < 3) {
 		details.push({
-			label: SystemName + ".Quantity",
+			label: "T2K4E.ItemSheet.Quantity",
 			value: quantity
 		});		
 	}
 
-	return { title, description, subtitle, subtitlecolor, details, properties , propertiesLabel };
+	return { title, description, subtitle, details, properties , propertiesLabel };
 }
 
 function rollCheck(type, id, actor) {

@@ -184,13 +184,6 @@ Hooks.on("argonInit", (CoreHUD) => {
 			
 			this.element.querySelector(".player-buttons").style.right = "0%";
 		}
-		
-		static async rollInjuries() {
-			let table = await fromUuid("RollTable." + game.settings.get(ModuleName, "InjurieTable"));
-			if (table) {
-				table.draw({roll: true, displayChat: true});
-			}
-		}
 	}
 	
 	class T2KDrawerPanel extends ARGON.DRAWER.DrawerPanel {
@@ -446,10 +439,18 @@ Hooks.on("argonInit", (CoreHUD) => {
 		constructor(...args) {
 			super(...args);
 			
-			if (this.item?.type == "weapon") {
+			if (this.item?.type == "weapon" || this.item?.type == "grenade" || this.isWeaponSet) {
 				Hooks.on("updateActor", (actor, changes, infos, sender) => {
 					if (this.quantity != null) {
 						if (this.actor == actor) {
+							this.render();
+						}
+					}
+				});
+				
+				Hooks.on("updateItem", (item, changes, infos, sender) => {
+					if (this.actor == item.parent) {
+						if (this.item?.system.ammo == item.name) {
 							this.render();
 						}
 					}
@@ -473,11 +474,37 @@ Hooks.on("argonInit", (CoreHUD) => {
 		async _onTooltipMouseEnter(event) {
 			const tooltipData = await this.getTooltipData();
 			if (!tooltipData) return;
-			this._tooltip = new T2KTooltip(tooltipData, this.element, this.tooltipOrientation);
+			this._tooltip = new ARGON.CORE.Tooltip(tooltipData, this.element, this.tooltipOrientation);
 			this._tooltip.render();
 		}
 
 		get quantity() {
+			switch (this.item.type) {
+				case "weapon":
+				case "grenade":
+					if (this.item?.system.props?.disposable) {
+						return this.item.system.qty;
+					}
+					
+					if (this.item?.system.ammo) {
+						let ammoitems = this.actor.items.filter(item => item.name == this.item?.system.ammo);
+						
+						let count = 0;
+						
+						for (const ammoitem of ammoitems) {
+							count = count + ammoitem.system.qty * ammoitem.system.ammo.value;
+						}
+						
+						return count;
+					}
+					break;
+				default: 
+					if (this.item.system?.hasOwnProperty("qty")) {
+						return this.item.system.qty;
+					}
+					break;
+			}
+			
 			return null;
 		}
 		
@@ -486,7 +513,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 			
 			var used = false;
 			
-			if (this.item.type == "weapon") {
+			if (this.item.type == "weapon" || this.item.type == "grenade") {
 				used = true;
 				
 				this.item.rollAttack({}, this.actor);
@@ -532,6 +559,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 		static consumeActionEconomy(item) {
 			switch (item.type) {
 				case "weapon":
+				case "grenade":
 					consumeAction("slow");
 					break;
 				case "gear":
@@ -556,7 +584,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 
 		get label() {
 			switch (this.type) {
-				case "gear": return SystemName+".Gear";
+				case "gear": return ModuleName+".Titles.Gear";
 			}
 		}
 
@@ -613,7 +641,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 					return 1;
 					break;
 				case "free":
-					return 3;
+					return 2;
 					break;
 			}
 			return 0;
@@ -622,13 +650,6 @@ Hooks.on("argonInit", (CoreHUD) => {
 		async getTooltipData() {
 			const tooltipData = await getTooltipDetails(this.item, this.actor.system.creatureType);
 			return tooltipData;
-		}
-		
-		async _onTooltipMouseEnter(event) {
-			const tooltipData = await this.getTooltipData();
-			if (!tooltipData) return;
-			this._tooltip = new T2KTooltip(tooltipData, this.element, this.tooltipOrientation);
-			this._tooltip.render();
 		}
 		
 		async _onLeftClick(event) {
@@ -677,7 +698,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 		}
 		
 		async getDefaultSets() {
-			let attacks = this.actor.items.filter((item) => item.type === "weapon");
+			let attacks = this.actor.items.filter((item) => ["weapon", "grenade"].includes(item.type));
 			
 			return {
 				1: {
@@ -726,7 +747,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 				event.stopPropagation();
 				const data = JSON.parse(event.dataTransfer.getData("text/plain"));
 				const item = await fromUuid(data.uuid);
-				if(item?.type != "weapon") return;
+				if(! ["weapon", "grenade"].includes(item?.type)) return;
 				const set = event.currentTarget.dataset.set;
 				const slot = event.currentTarget.dataset.slot;
 				const sets = this.actor.getFlag("enhancedcombathud", "weaponSets") || {};
@@ -748,12 +769,6 @@ Hooks.on("argonInit", (CoreHUD) => {
 			return sets[this.actor.getFlag("enhancedcombathud", "activeWeaponSet")];
 		}
     }
-	
-	class T2KTooltip extends ARGON.CORE.Tooltip {
-		get template() {
-			return `modules/${ModuleName}/templates/T2KTooltip.hbs`; //to add color to subtitles
-		}
-	}
   
     /*
     class T2KEquipmentButton extends ARGON.MAIN.BUTTONS.EquipmentButton {

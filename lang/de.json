@@ -1,66 +1,67 @@
 {
-	"enhancedcombathud-mutant-year-zero" : {
+	"enhancedcombathud-t2k4e" : {
 		"Titles" : {
-			"ActionAction"				: "AKTIONEN",
-			"FreeAction"				: "FREI",
-			"Skills"					: "Fertigkeiten",
+			"SlowAction"				: "LANGSAME AKTIONEN",
+			"FastAction"				: "SCHNELLE AKTIONEN",
+			"FreeAction"				: "FREIE AKTIONEN",
+			"Attributes"				: "Attribute",
 			"ROLL"						: "WÜRFELN",
+			"Properties"				: "Eigenschaften",
+			"Gear"						: "Ausrüstung",
+			
+			"Persuade"					: "Überzeugen",
+			"Grapple"					: "Greifen",
+			"BreakFree"					: "Befreien",
+			"ClearJam"					: "Entklemmen",
+			"Aim"						: "Zielen",
 			"FirstAid"					: "Erstehilfe",
-			"Tinkering"					: "Basteln",
+			"Rally"						: "Ermutigen",
+			"EnterExit"					: "Vehikel betreten/verlassen",
+			
+			"Cover"						: "Deckung suchen",
+			"FulltoPartial"				: "Voll zu teil Deckung",
+			"Run"						: "Rennen",
+			"CrossBarier"				: "Barriere überwinden",
+			"GetUp"						: "Aufstehen",
+			"Shove"						: "Schubsen",
+			"Disarm"					: "Entwaffnen",
+			"GrappleAttack"				: "Greifangriff",
+			"Retreat"					: "Zurückziehen",
 			"Reload"					: "Nachladen",
-			"TakeCover"					: "Deckung",
-			"Duck"						: "ducken",
-			"StandUp"					: "aufstehen",
-			"DrawWeapon"				: "Waffe ziehen",
-			"Parry"						: "parieren",
-			"Opportunity"				: "Gelegenheits Angriff",
-			"Overwatch"					: "vorbereiten",
-			"Defend"					: "Verteidigen",
-			"AimedShot"					: "gezielt",
-			"QuickShot"					: "schnell"
+			
+			"Drop"						: "Fallen lassen",
+			"PartialtoFull"				: "Teil zu volle Deckung"
 		},
 		
 		"Descriptions" : {
-			"Flee"						: "Siehe Coriolis Regelbuch S.??",
-			"FirstAid"					: "Siehe Coriolis Regelbuch S.??",
-			"Tinkering"					: "Siehe Coriolis Regelbuch S.??",
-			"Reload"					: "Siehe Coriolis Regelbuch S.??",
-			"TakeCover"					: "Siehe Coriolis Regelbuch S.??",
-			"Duck"						: "Siehe Coriolis Regelbuch S.??",
-			"StandUp"					: "Siehe Coriolis Regelbuch S.??",
-			"DrawWeapon"				: "Siehe Coriolis Regelbuch S.??",
-			"Parry"						: "Siehe Coriolis Regelbuch S.??",
-			"Opportunity"				: "Siehe Coriolis Regelbuch S.??",
-			"Overwatch"					: "Siehe Coriolis Regelbuch S.??",
-			"Defend"					: "Siehe Coriolis Regelbuch S.??"
-		},
-		
-		"Settings" : {
-			"InjurieTable" : {
-				"name"					: "Kritische Verletzungen Tabelle",
-				"descrp"				: "Die Tabelle auf welche gewürfelt wird wenn die Lebenspunkte auf 0 fallen (ID der Tabelle)"
-			},
-			"AutoRollInjuries" : {
-				"name"					: "Verletzungen automatisch Würfeln",
-				"descrp"				: "Ob kritische Verletzungen automatisch gewürfelt werden sollen, wenn die Lebenspunkte auf 0 fallen"				
-			},
-			"TalentsThreshold" : {
-				"name"					: "Talente teilungs Grenze",
-				"descrp"				: "Die minimale Menge an Talenten in einer Gruppe um eine eigene Kategorie in der UI zu erhalten"				
-			},
-			"UseDiceCircles" : {
-				"name"					: "Nutze Würfel Symbole",
-				"descrp"				: "Ob Würfel Symbole anstatt Zahlen für Attribute und Fertigkeiten angezeigt werden sollen"				
-			},
-			"ShowAimedQuick" : {
-				"name"					: "Zeige gezielt und schnell",
-				"descrp"				: "Ob optionen für gezielte und schnelle Schüsse bei Fernkampfwaffen angezeigt werden sollen"
-			}
+			"Flee"						: "Siehe Twilight:2000 Regelbuch S.??",
+			"Persuade"					: "Siehe Twilight:2000 Regelbuch S.??",
+			"Grapple"					: "Siehe Twilight:2000 Regelbuch S.??",
+			"BreakFree"					: "Siehe Twilight:2000 Regelbuch S.??",
+			"ClearJam"					: "Siehe Twilight:2000 Regelbuch S.??",
+			"Aim"						: "Siehe Twilight:2000 Regelbuch S.??",
+			"FirstAid"					: "Siehe Twilight:2000 Regelbuch S.??",
+			"Rally"						: "Siehe Twilight:2000 Regelbuch S.??",
+			"EnterExit"					: "Siehe Twilight:2000 Regelbuch S.??",
+			
+			"Cover"						: "Siehe Twilight:2000 Regelbuch S.??",
+			"FulltoPartial"				: "Siehe Twilight:2000 Regelbuch S.??",
+			"Run"						: "Siehe Twilight:2000 Regelbuch S.??",
+			"CrossBarier"				: "Siehe Twilight:2000 Regelbuch S.??",
+			"GetUp"						: "Siehe Twilight:2000 Regelbuch S.??",
+			"Shove"						: "Siehe Twilight:2000 Regelbuch S.??",
+			"Disarm"					: "Siehe Twilight:2000 Regelbuch S.??",
+			"GrappleAttack"				: "Siehe Twilight:2000 Regelbuch S.??",
+			"Retreat"					: "Siehe Twilight:2000 Regelbuch S.??",
+			"Reload"					: "Siehe Twilight:2000 Regelbuch S.??",
+			
+			"Drop"						: "Siehe Twilight:2000 Regelbuch S.??",
+			"PartialtoFull"				: "Siehe Twilight:2000 Regelbuch S.??"
 		}
 	},
 	
-    "enhancedcombathud.themeOptions.mainAction" : "Farbe 3AP Aktion",
-    "enhancedcombathud.themeOptions.bonusAction" : "Farbe 2AP Aktion",
-    "enhancedcombathud.themeOptions.freeAction" : "Farbe 1AP Aktion",
-    "enhancedcombathud.themeOptions.reaction" : "Frabe freie Aktion"
+    "enhancedcombathud.themeOptions.mainAction" : "Langsame Aktions Farben",
+    "enhancedcombathud.themeOptions.bonusAction" : "Schnelle Aktions Farben",
+    "enhancedcombathud.themeOptions.freeAction" : "Freie Aktions Farben",
+    "enhancedcombathud.themeOptions.reaction" : "nicht benutzt"
 }
