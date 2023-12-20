@@ -1,4 +1,4 @@
-# Argon-Coriolis
+# Argon-Twilight: 2000
 An implementation of the [Argon - Combat HUD](https://foundryvtt.com/packages/enhancedcombathud) (by [TheRipper93](https://theripper93.com/) and [Mouse0270](https://github.com/mouse0270)) for the [Twilight: 2000](https://foundryvtt.com/packages/t2k4e) system. The Argon Combat HUD (CORE) module is required for this module to work.
 
 ![U0shrCV](https://github.com/Saibot393/enhancedcombathud-t2k4e/assets/137942782/dadd189c-87aa-4046-894c-8be1c45fbc0d)
@@ -7,7 +7,7 @@ An implementation of the [Argon - Combat HUD](https://foundryvtt.com/packages/en
 
 ### The documentation for the core argon features can be found [here](https://api.theripper93.com/modulewiki/enhancedcombathud/free)
 
-This module adjusts various Argon features for the Coriolis system:
+This module adjusts various Argon features for the Twilight: 2000 system:
 - **Portrait**
     - Both hit points and sanity will be displayed at the bottom left
     - The different armor values will be displayed at the bottom right
