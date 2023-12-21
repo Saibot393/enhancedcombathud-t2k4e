@@ -49,6 +49,7 @@ function registerT2KECHSItems () {
 				skill : "rangedCombat"
 			}
 		},
+		/*
 		Aim : {
 			img: "modules/enhancedcombathud-t2k4e/icons/reticule.svg",
 			name: game.i18n.localize(ModuleName+".Titles.Aim"),
@@ -58,6 +59,7 @@ function registerT2KECHSItems () {
 				skill : ""
 			}
 		},
+		*/
 		FirstAid : {
 			img: "modules/enhancedcombathud-t2k4e/icons/first-aid-kit.svg",
 			name: game.i18n.localize(ModuleName+".Titles.FirstAid"),
@@ -75,7 +77,7 @@ function registerT2KECHSItems () {
 				description : game.i18n.localize(ModuleName+".Descriptions.Rally"),
 				skill : "command"
 			}
-		},
+		}/*,
 		EnterExit : {
 			img: "modules/enhancedcombathud-t2k4e/icons/exit-door.svg",
 			name: game.i18n.localize(ModuleName+".Titles.EnterExit"),
@@ -85,6 +87,7 @@ function registerT2KECHSItems () {
 				skill : ""
 			}
 		}
+		*/
 	}
 	
 	T2KECHFastItems = {
@@ -93,10 +96,10 @@ function registerT2KECHSItems () {
 		},
 		Cover : {
 			img: "modules/enhancedcombathud-t2k4e/icons/shield.svg",
-			name: game.i18n.localize(ModuleName+".Titles.CrossBarier"),
+			name: game.i18n.localize(ModuleName+".Titles.Cover"),
 			type : "base",
 			system : {
-				description : game.i18n.localize(ModuleName+".Descriptions.DrawWeapon"),
+				description : game.i18n.localize(ModuleName+".Descriptions.Cover"),
 				skill : ""
 			}
 		},

@@ -369,7 +369,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[0]), new T2KSpecialActionButton(specialActions[1])));
 			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[2]), new T2KSpecialActionButton(specialActions[3])));
 			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[4]), new T2KSpecialActionButton(specialActions[5])));
-			buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[6]), new T2KSpecialActionButton(specialActions[7])));
+			//buttons.push(new ARGON.MAIN.BUTTONS.SplitButton(new T2KSpecialActionButton(specialActions[6]), new T2KSpecialActionButton(specialActions[7])));
 			
 			return buttons.filter(button => button.items == undefined || button.items.length);
 		}
