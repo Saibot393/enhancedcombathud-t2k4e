@@ -15,6 +15,19 @@ Hooks.on("argonInit", (CoreHUD) => {
 				if (!ui.ARGON.components.main[0].isActionUsed) {
 					ui.ARGON.components.main[0].isActionUsed = true;
 					ui.ARGON.components.main[0].updateActionUse();
+					
+					if (game.modules.get("yze-combat")?.active) {
+						let combat = game.combats.find(combat => combat.scene = canvas.scene);
+						
+						if (combat) {
+							let combatant = combat.combatants.find(comb => comb.actorId == ui.ARGON._actor?.id);
+							
+							if (combatant) {
+								combatant.setSlowAction(true);
+							}
+						}
+					}
+					
 					return true;
 				}
 				break;
@@ -22,6 +35,19 @@ Hooks.on("argonInit", (CoreHUD) => {
 				if (!ui.ARGON.components.main[1].isActionUsed) {
 					ui.ARGON.components.main[1].isActionUsed = true;
 					ui.ARGON.components.main[1].updateActionUse();
+					
+					if (game.modules.get("yze-combat")?.active) {
+						let combat = game.combats.find(combat => combat.scene = canvas.scene);
+						
+						if (combat) {
+							let combatant = combat.combatants.find(comb => comb.actorId == ui.ARGON._actor?.id);
+							
+							if (combatant) {
+								combatant.setFastAction(true);
+							}
+						}
+					}
+					
 					return true;
 				}
 				else {
@@ -31,6 +57,34 @@ Hooks.on("argonInit", (CoreHUD) => {
 		}
 		
 		return false;
+	}
+	
+	if (game.modules.get("yze-combat")?.active) {
+		Hooks.on("updateCombatant", (combatant, changes) => {
+			if (combatant.actorId ==  ui.ARGON._actor?.id) {
+				if (changes?.flags && changes?.flags["yze-combat"]) {
+					if (changes?.flags["yze-combat"].hasOwnProperty("slowAction")) {
+						if (changes?.flags["yze-combat"].slowAction) {
+							consumeAction("slow");
+						}
+						else {
+							ui.ARGON.components.main[0].isActionUsed = false;
+							ui.ARGON.components.main[0].updateActionUse();
+						}
+					}
+					
+					if (changes?.flags["yze-combat"].hasOwnProperty("fastAction")) {
+						if (changes?.flags["yze-combat"].fastAction) {
+							consumeAction("fast");
+						}
+						else {
+							ui.ARGON.components.main[1].isActionUsed = false;
+							ui.ARGON.components.main[1].updateActionUse();
+						}
+					}
+				}
+			}
+		});
 	}
   
     class T2KPortraitPanel extends ARGON.PORTRAIT.PortraitPanel {
@@ -450,7 +504,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 				
 				Hooks.on("updateItem", (item, changes, infos, sender) => {
 					if (this.actor == item.parent) {
-						if (this.item?.system.ammo == item.name) {
+						if (item.name.includes(this.item?.system.ammo.includes) || this.item?.system.mag?.target == item.id) {
 							this.render();
 						}
 					}
@@ -486,8 +540,16 @@ Hooks.on("argonInit", (CoreHUD) => {
 						return this.item.system.qty;
 					}
 					
+					if (this.item?.system.mag?.target) {
+						let mag = this.actor.items.get(this.item?.system.mag?.target);
+						
+						if (mag) {
+							return mag.system?.ammo?.value;
+						}
+					}
+					
 					if (this.item?.system.ammo) {
-						let ammoitems = this.actor.items.filter(item => item.name == this.item?.system.ammo);
+						let ammoitems = this.actor.items.filter(item => item.name.includes(this.item?.system.ammo));
 						
 						let count = 0;
 						
@@ -657,8 +719,12 @@ Hooks.on("argonInit", (CoreHUD) => {
 			
 			const item = this.item;
 			
-			if (this.item.system.skill) {
+			if (item.system.skill) {
 				rollCheck("skill", this.item.system.skill, this.actor);
+			}
+			
+			if (item.flags[ModuleName]?.onclick) {
+				used = item.flags[ModuleName]?.onclick({activeWeapon : (await ui.ARGON.components.weaponSets.getactiveSet()).primary});
 			}
 			
 			if (used) {

@@ -179,6 +179,40 @@ function registerT2KECHSItems () {
 			img: "modules/enhancedcombathud-t2k4e/icons/reload-gun-barrel.svg",
 			name: game.i18n.localize(ModuleName+".Titles.Reload"),
 			type : "base",
+			flags : {
+				[ModuleName] : {
+					onclick : (infos) => {
+						console.log(infos);
+						let weapon = infos.activeWeapon;
+						
+						if (weapon?.system.ammo) {
+							let actor = weapon.actor;
+							
+							let mags = actor.items.filter(item => item.type == "ammunition" && item.name.includes(weapon.system.ammo));
+							
+							mags = mags.filter(mag => mag.id != weapon.system.mag?.target);
+							
+							let maxmag = null;
+							let maxmagvalue = 0;
+							
+							for (let mag of mags) {
+								if (mag.system?.ammo?.value > maxmagvalue) {
+									maxmag = mag;
+									maxmagvalue = mag.system?.ammo?.value;
+								}
+							}
+							
+							if (maxmag) {
+								weapon.update({system : {mag : {target : maxmag.id}}});
+								
+								return true;
+							}
+						}
+						
+						return false;
+					}
+				}
+			},
 			system : {
 				description : game.i18n.localize(ModuleName+".Descriptions.Reload"),
 				skill : "rangedCombat"
@@ -214,7 +248,10 @@ function registerT2KECHSItems () {
 	for (let itemset of [T2KECHSlowItems, T2KECHFastItems, T2KECHFreeItems]) {
 		for (let itemkey of Object.keys(itemset)) {
 			if (itemkey != "groupflags") {
-				itemset[itemkey].flags = {};
+				if (!itemset[itemkey].flags) {
+					itemset[itemkey].flags = {};
+				}
+				
 				itemset[itemkey].flags[ModuleName] = {...itemset.groupflags, ...itemset[itemkey].flags[ModuleName]};
 				
 				let ReplacementItem = game.items.find(item => item.name == ItemReplacementID + itemkey);
