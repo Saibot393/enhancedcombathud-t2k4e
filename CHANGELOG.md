@@ -1,3 +1,6 @@
+## v2.0.0
+- v12 compatibility
+
 ## v1.1.0
 - Improved ammunition logic
   - now correctly recognises magazines
