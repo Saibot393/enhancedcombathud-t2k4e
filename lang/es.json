@@ -1,0 +1,67 @@
+{
+	"enhancedcombathud-t2k4e" : {
+		"Titles" : {
+			"SlowAction"				: "ACCIONES LENTAS",
+			"FastAction"				: "ACCIONES RÁPIDAS",
+			"FreeAction"				: "ACCIONES GRATUITAS",
+			"Attributes"				: "Atributos",
+			"ROLL"						: "TIRAR",
+			"Properties"				: "Propiedades",
+			"Gear"						: "Equipo",
+			
+			"Persuade"					: "Persuadir",
+			"Grapple"					: "Agarrar",
+			"BreakFree"					: "Liberar",
+			"ClearJam"					: "Liberar encasquillamiento",
+			"Aim"						: "Apuntar",
+			"FirstAid"					: "Primeros auxilios",
+			"Rally"						: "Reunión",
+			"EnterExit"					: "Entrar/salir de un vehículo",
+			
+			"Cover"						: "Buscar cobertura",
+			"FulltoPartial"				: "Pasar de cobertura total a parcial",
+			"Run"						: "Correr",
+			"CrossBarier"				: "Cruzar barrera",
+			"GetUp"						: "Levantarse",
+			"Shove"						: "Empujón",
+			"Disarm"					: "Desarmar",
+			"GrappleAttack"				: "Ataque de agarre",
+			"Retreat"					: "Retirarse",
+			"Reload"					: "Recargar",
+			
+			"Drop"						: "Tirarse al suelo",
+			"PartialtoFull"				: "Pasar de cobertura parcial a completa"
+		},
+		
+		"Descriptions" : {
+			"Flee"						: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"Persuade"					: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"Grapple"					: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"BreakFree"					: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"ClearJam"					: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"Aim"						: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"FirstAid"					: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"Rally"						: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"EnterExit"					: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			
+			"Cover"						: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"FulltoPartial"				: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"Run"						: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"CrossBarier"				: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"GetUp"						: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"Shove"						: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"Disarm"					: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"GrappleAttack"				: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"Retreat"					: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"Reload"					: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			
+			"Drop"						: "Consulta el libro de reglas básicas de Twilight: 2000, página ??.",
+			"PartialtoFull"				: "Consulta el libro de reglas básicas de Twilight: 2000, página ??."
+		}
+	},
+	
+    "enhancedcombathud.themeOptions.mainAction" : "Colores de las acciones lentas",
+    "enhancedcombathud.themeOptions.bonusAction" : "Colores de las acciones rápidas",
+    "enhancedcombathud.themeOptions.freeAction" : "Colores de las acciones gratuitas",
+    "enhancedcombathud.themeOptions.reaction" : "No usado"
+}
