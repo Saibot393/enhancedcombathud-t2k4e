@@ -43,6 +43,6 @@ Due to the way movement works in Twilight:2000 the Movement Tracker is not (yet?
 
 #### Languages:
 
-The module contains an English and a German translation. If you want additional languages to be supported [let me know](https://github.com/Saibot393/enhancedcombathud-t2k4e/issues).
+The module contains an English, a German, and an Spanish (thanks to [Bakali77](https://github.com/Bakali77)) translation. If you want additional languages to be supported [let me know](https://github.com/Saibot393/enhancedcombathud-t2k4e/issues).
 
 **If you have suggestions, questions, or requests for additional features please [let me know](https://github.com/Saibot393/enhancedcombathud-t2k4e/issues).**
