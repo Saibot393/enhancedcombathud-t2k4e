@@ -1,3 +1,6 @@
+## v2.0.2
+- Updato to english translation (thanks to [GRUBES](https://github.com/GRUBES))
+
 ## v2.0.1
 - Added Spanish translation (thanks to [Bakali77](https://github.com/Bakali77))
 
