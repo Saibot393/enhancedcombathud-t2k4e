@@ -798,7 +798,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 		}
 
 		async _getSets() { //overwrite because slots.primary/secondary contains id, not uuid
-			const sets = mergeObject(await this.getDefaultSets(), deepClone(this.actor.getFlag("enhancedcombathud", "weaponSets") || {}));
+			const sets = (foundry?.utils?.mergeObject ?? mergeObject)(await this.getDefaultSets(), (foundry?.utils?.deepClone ?? deepClone)(this.actor.getFlag("enhancedcombathud", "weaponSets") || {}));
 
 			for (const [set, slots] of Object.entries(sets)) {
 				slots.primary = slots.primary ? await this.actor.items.get(slots.primary) : null;

@@ -7,10 +7,10 @@
     "name": "saibot"
     }
   ],
-  "version": "2.0.2",
+  "version": "3.0.0",
   "compatibility": {
-    "minimum": "11",
-    "verified": "12"
+    "minimum": "12",
+    "verified": "14"
   },
   "socket": "true",
   "languages": [
@@ -57,7 +57,7 @@
 	]
   },
   "url": "https://github.com/Saibot393/enhancedcombathud-t2k4e",
-  "download": "https://github.com/Saibot393/enhancedcombathud-t2k4e/archive/refs/tags/v2.0.2.zip",
+  "download": "https://github.com/Saibot393/enhancedcombathud-t2k4e/archive/refs/tags/v3.0.0.zip",
   "manifest": "https://github.com/Saibot393/enhancedcombathud-t2k4e/releases/latest/download/module.json",
   "readme": "https://github.com/Saibot393/enhancedcombathud-t2k4e/blob/main/README.md",
   "changelog": "https://github.com/Saibot393/enhancedcombathud-t2k4e/blob/main/CHANGELOG.md"
