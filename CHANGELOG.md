@@ -1,3 +1,6 @@
+## v3.0.0
+- v14 (and v13) compatibility
+
 ## v2.0.2
 - Updato to english translation (thanks to [GRUBES](https://github.com/GRUBES))
 
